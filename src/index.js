@@ -148,7 +148,7 @@ const run = async () => {
     core.setOutput(Output.STATUS, status);
     core.setOutput(Output.APPLICATION_ID, applicationId);
   } catch (error) {
-    core.setFailed(`Query metadata failed: ${error.message}`);
+    core.setFailed(`Build action failed: ${error.message}`);
   }
 };
 
