@@ -1,13 +1,40 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: "Nullplatform Metadata"
+description: "Github Action for query Nullplatform metadata"
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
-    required: true
-    default: '1000'
+  action:
+    description: "The build action controls what happens to the build. Can be one of: create, update"
+    required: false
+  id:
+    description: "The build id"
+    required: false
+  status:
+    description: "The build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'"
+    required:
+  application-id:
+    description: "The application id to build"
+    required: false
+  commit-id:
+    description: "The SHA commit"
+    required: false
+  commit-permalink:
+    description: "The commit web link"
+    required: false
+  description:
+    description: "The build description. Defaults to commit message"
+    required: false
+  branch:
+    description: "The build branch. Defaults to current workflow execution branch"
+    required: false
+  image-repository-url:
+    description: "The image repository URL wheres the build image was uploaded"
+    required: false
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  id:
+    description: "The build id"
+  status:
+    description: "The new build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'"
+  application-id:
+    description: "The application id built"
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"
