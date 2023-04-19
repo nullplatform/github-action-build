@@ -21,7 +21,7 @@ const setFailed = (error) => {
 const createBuild = () => {
   core.info('Validating inputs...');
 
-  const status = BuildStatus.PENDING;
+  const status = BuildStatus.IN_PROGRESS;
   const applicationId = core.getInput(Input.APPLICATION_ID);
   const commitId = core.getInput(Input.COMMIT_ID) || github.context.sha;
   const commitPermalink = core.getInput(Input.COMMIT_PERMALINK)
