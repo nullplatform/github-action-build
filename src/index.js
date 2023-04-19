@@ -102,6 +102,7 @@ const updateBuild = async () => {
 
   const id = core.getInput(Input.ID);
   const status = core.getInput(Input.STATUS);
+  const commitId = core.getInput(Input.COMMIT_ID) || github.context.sha;
   const imageRepositoryUrl = core.getInput(Input.IMAGE_REPOSITORY_URL);
 
   if (isEmpty(id)) {
@@ -112,8 +113,14 @@ const updateBuild = async () => {
     setFailed(`Input "${Input.STATUS}" cannot be empty`);
   }
 
-  if (status === BuildStatus.SUCCESSFUL && isEmpty(imageRepositoryUrl)) {
-    setFailed(`Input "${Input.IMAGE_REPOSITORY_URL}" cannot be empty`);
+  if (status === BuildStatus.SUCCESSFUL) {
+    if (isEmpty(commitId)) {
+      setFailed(`Input "${Input.COMMIT_ID}" cannot be empty`);
+    }
+
+    if (isEmpty(imageRepositoryUrl)) {
+      setFailed(`Input "${Input.IMAGE_REPOSITORY_URL}" cannot be empty`);
+    }
   }
 
   const body = {
