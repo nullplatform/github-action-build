@@ -143,12 +143,12 @@ const run = async () => {
     let build = null;
     if (action === ActionType.CREATE) {
       build = await createBuild();
-      core.info(`Successfully created build with id ${build.id}`);
+      core.info(`Successfully created build with id "${build.id}"`);
     } else if (action === ActionType.UPDATE) {
       build = await updateBuild();
-      core.info(`Successfully updated build with id: ${build.id} and status: ${build.status}`);
+      core.info(`Successfully updated build with id "${build.id}" and status "${build.status}"`);
     } else {
-      core.setFailed(`Invalid action type: ${action}`);
+      core.setFailed(`Invalid action type "${action}"`);
     }
     const { id, status, application_id: applicationId } = build;
     core.setOutput(Output.ID, id);
