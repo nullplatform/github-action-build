@@ -10168,7 +10168,7 @@ const createAsset = () => {
     metadata: {},
   };
 
-  return client.post('asset', body);
+  return client.post(`build/${id}/asset`, body);
 };
 
 const updateBuild = async () => {
