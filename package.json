@@ -8,6 +8,7 @@
     "lint:fix": "npx eslint . --fix",
     "prepare:husky": "husky install",
     "prepare": "ncc build src/index.js -o dist --source-map --license licenses.txt",
+    "update:version": "./update-version.sh",
     "test": "jest",
     "prettier": "npx prettier --write .",
     "all": "npm run lint && npm run prepare && npm run test"
