@@ -9763,7 +9763,8 @@ const createBuild = () => {
   const commitPermalink = core.getInput(Input.COMMIT_PERMALINK)
     || `${github.context.payload.repository.html_url}/commit/${github.context.sha}`;
   const description = core.getInput(Input.DESCRIPTION)
-    || github.context.payload.head_commit.message;
+    || (github.context.payload.head_commit && github.context.payload.head_commit.message)
+    || `Commit ${github.context.sha}`;
   const branch = core.getInput(Input.BRANCH) || github.context.ref.split('/').pop();
 
   if (isEmpty(status)) {
