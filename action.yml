@@ -1,5 +1,5 @@
-name: "Nullplatform Metadata"
-description: "Github Action for query Nullplatform metadata"
+name: "Nullplatform Build"
+description: "Github Action to manage application builds on Nullplatform"
 inputs:
   action:
     description: "The build action controls what happens to the build. Can be one of: create, update"
@@ -12,7 +12,7 @@ inputs:
     required:
   application-id:
     description: "The application id to build"
-    required: false
+    required: true
   commit-id:
     description: "The SHA commit"
     required: false
