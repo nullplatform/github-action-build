@@ -12,7 +12,7 @@ inputs:
     required:
   application-id:
     description: "The application id to build"
-    required: true
+    required: false
   commit-id:
     description: "The SHA commit"
     required: false
