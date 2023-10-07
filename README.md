@@ -1,83 +1,141 @@
-# Nullplatform Build GitHub Action
+<h2 align="center">
+    <a href="https://httpie.io" target="blank_">
+        <img height="100" alt="nullplatform" src="https://nullplatform.com/favicon/android-chrome-192x192.png" />
+    </a>
+    <br>
+    <br>
+    Nullplatform Build GitHub Action
+    <br>
+</h2>
 
-<p align="center">
-  <a href="https://github.com/nullplatform/github-action-build/actions"><img alt="javscript-action status" src="https://github.com/nullplatform/github-action-build/workflows/units-test/badge.svg"></a>
-</p>
+## Overview
 
-You can use the GitHub Action to automate the build process on Nullplatform.
+The "Nullplatform Build" GitHub Action allows you to query and interact with Nullplatform application builds. It provides actions for creating new builds, updating existing builds, and managing associated assets. This action simplifies the process of working with Nullplatform build data within your workflows.
 
-## Code
+## Inputs
 
-Install the dependencies
+### `action`
 
-```bash
-npm install
-```
+- **Description**: The build action controls what happens to the build. Can be one of: create, update.
+- **Required**: No
 
-Run the tests :heavy_check_mark:
+### `id`
 
-```bash
-$ npm test
+- **Description**: The build id.
+- **Required**: No if creating a build, Yes if updating a build
 
- PASS  ./index.test.js
-  ✓ throws invalid credentials (3ms)
-  ✓ logins into nullplatform (504ms)
-  ✓ other test (95ms)
-...
-```
+### `status`
 
-## Change action.yml
+- **Description**: The build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'.
+- **Required**: No if creating a build, Yes if updating a build
 
-The action.yml defines the inputs and output for your action.
+### `application-id`
 
-Update the action.yml with your name, description, inputs and outputs for your action.
+- **Description**: The application id to build.
+- **Required**: Yes if creating a build, No if updating a build
 
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
+### `commit-id`
 
-## Change the Code
+- **Description**: The SHA commit.
+- **Required**: No
 
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
+### `commit-permalink`
 
-```javascript
-const core = require('@actions/core');
-...
+- **Description**: The commit web link.
+- **Required**: No
 
-async function run() {
-  try {
-      ...
-  }
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
+### `description`
 
-run()
-```
+- **Description**: The build description. Defaults to the commit message.
+- **Required**: No
 
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
+### `branch`
 
-## Package for distribution
+- **Description**: The build branch. Defaults to the current workflow execution branch.
+- **Required**: No
 
-Update version in ``package.json`` file and then run:
+### `image-repository-url`
 
-```bash
-npm run update:version
-```
+- **Description**: The image repository URL where the build asset was uploaded.
+- **Required**: No
+
+## Outputs
+
+### `id`
+
+- **Description**: The build id.
+
+### `status`
+
+- **Description**: The new build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'.
+
+### `application-id`
+
+- **Description**: The application id built.
 
 ## Usage
 
-You can now consume the action by referencing the v1 branch
+Here are some common use cases for this GitHub Action:
+
+### Use Case 1: Create a New Build
 
 ```yaml
-uses: nullplatform/github-action-build@v1
-with:
-  action: create
-  state: pending
-  application_id: 20455
-  commit.id: ${{ github.event.head_commit.id }}
-  commit.permalink: ${{ github.event.head_commit.url }}
-  description: ${{ github.event.head_commit.message }}
-  branch: ${{ github.ref#refs/heads/ }}
+name: Create New Nullplatform Build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Create New Nullplatform Build
+      id: create-build
+      uses: your-org/nullplatform-metadata-action@v1
+      with:
+        action: create
+        application-id: your-app-id
+        
+    - name: Use Build ID
+      run: echo "New Build ID: ${{ steps.create-build.outputs.id }}"
 ```
 
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
+In this example, the GitHub Action creates a new Nullplatform build with a 'pending' status using the provided inputs.
+
+### Use Case 2: Update an Existing Build
+
+```yaml
+name: Update Nullplatform Build Status
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Update Nullplatform Build Status
+      id: update-build
+      uses: your-org/nullplatform-metadata-action@v1
+      with:
+        action: update
+        id: your-build-id
+        status: successful
+        
+    - name: Use Updated Status
+      run: echo "Updated Status: ${{ steps.update-build.outputs.status }}"
+```
+
+In this example, the GitHub Action updates an existing Nullplatform build's status to 'successful' when a pull request is closed.
+
+## License
+
+This GitHub Action is licensed under the [MIT License](LICENSE).
