@@ -10,7 +10,16 @@
 
 ## Overview
 
-The "Nullplatform Build" GitHub Action allows you to query and interact with Nullplatform application builds. It provides actions for creating new builds, updating existing builds, and managing associated assets. This action simplifies the process of working with Nullplatform build data within your workflows.
+The "Nullplatform Build" GitHub Action allows you to query and interact with nullplatform application builds. It provides actions for creating new builds, updating existing builds, and managing associated assets. This action simplifies the process of working with Nullplatform build data within your workflows.
+
+## Table of Contents
+
+- [Inputs](#inputs)
+- [Outputs](#outputs)
+- [Usage](#usage)
+  - [Use Case 1: Create a New Build](#use-case-1-create-a-new-build)
+  - [Use Case 2: Update an Existing Build](#use-case-2-update-an-existing-build)
+- [License](#license)
 
 ## Inputs
 
@@ -110,7 +119,7 @@ jobs:
       run: echo "New Build ID: ${{ steps.create-build.outputs.id }}"
 ```
 
-In this example, the GitHub Action creates a new Nullplatform build with a 'pending' status using the provided inputs.
+In this example, the GitHub Action creates a new nullplatform build with a 'pending' status using the provided inputs.
 
 ### Use Case 2: Update an Existing Build
 
@@ -146,7 +155,7 @@ jobs:
       run: echo "Updated Status: ${{ steps.update-build.outputs.status }}"
 ```
 
-In this example, the GitHub Action updates an existing Nullplatform build's status to 'successful' when a pull request is closed.
+In this example, the GitHub Action updates an existing nullplatform build's status to 'successful' when a pull request is closed.
 
 ## License
 
