@@ -91,11 +91,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+
+    - name: Login to Nullplatform
+      id: login
+      uses: nullplatform/nullplatform-login-action@v1
+      with:
+        api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
       
     - name: Create New Nullplatform Build
       id: create-build
-      uses: your-org/nullplatform-metadata-action@v1
+      uses: nullplatform/nullplatform-metadata-action@v1
       with:
         action: create
         application-id: your-app-id
@@ -120,11 +126,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+
+    - name: Login to Nullplatform
+      id: login
+      uses: nullplatform/nullplatform-login-action@v1
+      with:
+        api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
       
     - name: Update Nullplatform Build Status
       id: update-build
-      uses: your-org/nullplatform-metadata-action@v1
+      uses: nullplatform/nullplatform-metadata-action@v1
       with:
         action: update
         id: your-build-id
