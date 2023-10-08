@@ -16,8 +16,8 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with Nul
 
 ### `action`
 
-- **Description**: The build action controls what happens to the build. Can be one of: create, update.
-- **Required**: No
+- **Description**: The build action controls what happens to the build. Can be one of: `create`, `update`.
+- **Required**: Yes
 
 ### `id`
 
@@ -26,7 +26,7 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with Nul
 
 ### `status`
 
-- **Description**: The build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'.
+- **Description**: The build status. Can be one of: `pending`, `in_progress`, `failed`, `successful`.
 - **Required**: No if creating a build, Yes if updating a build
 
 ### `application-id`
@@ -36,7 +36,7 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with Nul
 
 ### `commit-id`
 
-- **Description**: The SHA commit.
+- **Description**: The SHA commit. Defaults to current SHA commit
 - **Required**: No
 
 ### `commit-permalink`
@@ -67,7 +67,7 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with Nul
 
 ### `status`
 
-- **Description**: The new build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'.
+- **Description**: The new build status. Can be one of: `pending`, `in_progress`, `failed`, `successful`.
 
 ### `application-id`
 
