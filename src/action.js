@@ -29,7 +29,7 @@ const createBuild = () => {
   const description = core.getInput(Input.DESCRIPTION)
     || (github.context.payload.head_commit && github.context.payload.head_commit.message)
     || `Commit ${github.context.sha}`;
-  const branch = core.getInput(Input.BRANCH) || github.context.ref.split('/').pop();
+  const branch = core.getInput(Input.BRANCH) || github.context.ref.replace(/^refs\/heads\//, '');
 
   if (isEmpty(status)) {
     setFailed(`Input "${Input.STATUS}" cannot be empty`);
