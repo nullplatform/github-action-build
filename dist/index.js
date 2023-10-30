@@ -9754,6 +9754,8 @@ const setFailed = (error) => {
   process.exit(1);
 };
 
+const truncate = (text, limit = 2000) => (text.length > limit ? text.substring(0, limit) : text);
+
 const createBuild = () => {
   core.info('Validating inputs...');
 
@@ -9798,7 +9800,7 @@ const createBuild = () => {
       id: commitId,
       permalink: commitPermalink,
     },
-    description,
+    description: truncate(description),
     branch,
   };
 
