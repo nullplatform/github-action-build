@@ -36,5 +36,5 @@ outputs:
   application-id:
     description: "The application id built"
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
