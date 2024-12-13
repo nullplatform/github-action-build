@@ -14,8 +14,22 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with nul
 
 ## Table of Contents
 
+- [Overview](#overview)
+- [Table of Contents](#table-of-contents)
 - [Inputs](#inputs)
+  - [`action`](#action)
+  - [`id`](#id)
+  - [`status`](#status)
+  - [`application-id`](#application-id)
+  - [`commit-id`](#commit-id)
+  - [`commit-permalink`](#commit-permalink)
+  - [`description`](#description)
+  - [`branch`](#branch)
+  - [`image-repository-url`](#image-repository-url)
 - [Outputs](#outputs)
+  - [`id`](#id-1)
+  - [`status`](#status-1)
+  - [`application-id`](#application-id-1)
 - [Usage](#usage)
   - [Use Case 1: Create a New Build](#use-case-1-create-a-new-build)
   - [Use Case 2: Update an Existing Build](#use-case-2-update-an-existing-build)
@@ -107,14 +121,14 @@ jobs:
       uses: nullplatform/github-action-login@v1
       with:
         api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
-      
+
     - name: Create New Nullplatform Build
       id: create-build
-      uses: nullplatform/github-action-metadata@v1
+      uses: nullplatform/github-action-build@v1
       with:
         action: create
         application-id: your-app-id
-        
+
     - name: Use Build ID
       run: echo "New Build ID: ${{ steps.create-build.outputs.id }}"
 ```
@@ -142,15 +156,15 @@ jobs:
       uses: nullplatform/github-action-login@v1
       with:
         api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
-      
+
     - name: Update Nullplatform Build Status
       id: update-build
-      uses: nullplatform/github-action-metadata@v1
+      uses: nullplatform/github-action-build@v1
       with:
         action: update
         id: your-build-id
         status: successful
-        
+
     - name: Use Updated Status
       run: echo "Updated Status: ${{ steps.update-build.outputs.status }}"
 ```
