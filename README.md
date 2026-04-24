@@ -70,7 +70,7 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with nul
 
 ### `description`
 
-- **Description**: The build description. Defaults to the commit message. On events where the payload does not include `head_commit` (such as `workflow_dispatch`, `schedule`, `repository_dispatch`, or `workflow_run`), the commit message is fetched via the GitHub API using [`github-token`](#github-token); if the token is missing or the request fails, it falls back to `Commit <sha>`.
+- **Description**: The build description. Defaults to the commit message — fetched via [`github-token`](#github-token) when the event payload does not include `head_commit` (e.g. `workflow_dispatch`), otherwise falls back to `Commit <sha>`.
 - **Required**: No
 
 ### `branch`
