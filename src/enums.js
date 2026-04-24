@@ -20,6 +20,7 @@ const Input = Object.freeze({
   DESCRIPTION: 'description',
   BRANCH: 'branch',
   IMAGE_REPOSITORY_URL: 'image-repository-url',
+  GITHUB_TOKEN: 'github-token',
 });
 
 const Output = Object.freeze({

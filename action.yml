@@ -9,7 +9,7 @@ inputs:
     required: false
   status:
     description: "The build status. Can be one of: 'pending', 'in_progress', 'failed', 'successful'"
-    required:
+    required: false
   application-id:
     description: "The application id to build"
     required: false
@@ -28,6 +28,10 @@ inputs:
   image-repository-url:
     description: "The image repository URL wheres the build image was uploaded"
     required: false
+  github-token:
+    description: "GitHub token used to fetch commit metadata when not available in the event payload (e.g. workflow_dispatch). Defaults to the automatically provided GITHUB_TOKEN."
+    required: false
+    default: ${{ github.token }}
 outputs:
   id:
     description: "The build id"
