@@ -3,6 +3,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const HttpClient = require('./client');
 const { isEmpty } = require('./validate');
+const { getCommitMessage } = require('./commit');
 const {
   Input, Output, BuildStatus, ActionType,
 } = require('./enums');
@@ -19,29 +20,6 @@ const setFailed = (error) => {
 };
 
 const truncate = (text, limit = 2000) => (text.length > limit ? text.substring(0, limit) : text);
-
-const getCommitMessage = async (sha) => {
-  try {
-    const token = core.getInput(Input.GITHUB_TOKEN);
-
-    if (isEmpty(token)) {
-      return null;
-    }
-
-    const octokit = github.getOctokit(token);
-
-    const { data } = await octokit.rest.git.getCommit({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      commit_sha: sha,
-    });
-
-    return data.message;
-  } catch (error) {
-    core.warning(`Could not fetch commit message: ${error.message}`);
-    return null;
-  }
-};
 
 const createBuild = async () => {
   core.info('Validating inputs...');
