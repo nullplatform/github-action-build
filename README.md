@@ -26,6 +26,7 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with nul
   - [`description`](#description)
   - [`branch`](#branch)
   - [`image-repository-url`](#image-repository-url)
+  - [`github-token`](#github-token)
 - [Outputs](#outputs)
   - [`id`](#id-1)
   - [`status`](#status-1)
@@ -69,7 +70,7 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with nul
 
 ### `description`
 
-- **Description**: The build description. Defaults to the commit message.
+- **Description**: The build description. Defaults to the commit message — fetched via [`github-token`](#github-token) when the event payload does not include `head_commit` (e.g. `workflow_dispatch`), otherwise falls back to `Commit <sha>`.
 - **Required**: No
 
 ### `branch`
@@ -80,6 +81,11 @@ The "Nullplatform Build" GitHub Action allows you to query and interact with nul
 ### `image-repository-url`
 
 - **Description**: The image repository URL where the build asset was uploaded.
+- **Required**: No
+
+### `github-token`
+
+- **Description**: GitHub token used to fetch commit metadata when it is not available in the event payload (for example on `workflow_dispatch`). Defaults to the automatically provided `${{ github.token }}`. The token needs the `contents: read` permission; if the workflow restricts permissions, add it explicitly.
 - **Required**: No
 
 ## Outputs

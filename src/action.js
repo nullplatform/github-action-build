@@ -20,7 +20,30 @@ const setFailed = (error) => {
 
 const truncate = (text, limit = 2000) => (text.length > limit ? text.substring(0, limit) : text);
 
-const createBuild = () => {
+const getCommitMessage = async (sha) => {
+  try {
+    const token = core.getInput(Input.GITHUB_TOKEN);
+
+    if (isEmpty(token)) {
+      return null;
+    }
+
+    const octokit = github.getOctokit(token);
+
+    const { data } = await octokit.rest.git.getCommit({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      commit_sha: sha,
+    });
+
+    return data.message;
+  } catch (error) {
+    core.warning(`Could not fetch commit message: ${error.message}`);
+    return null;
+  }
+};
+
+const createBuild = async () => {
   core.info('Validating inputs...');
 
   const status = BuildStatus.IN_PROGRESS;
@@ -30,6 +53,7 @@ const createBuild = () => {
     || `${github.context.payload.repository.html_url}/commit/${github.context.sha}`;
   const description = core.getInput(Input.DESCRIPTION)
     || (github.context.payload.head_commit && github.context.payload.head_commit.message)
+    || (await getCommitMessage(github.context.sha))
     || `Commit ${github.context.sha}`;
   const branch = core.getInput(Input.BRANCH) || github.context.ref.replace(/^refs\/heads\//, '');
 
