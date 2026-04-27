@@ -9739,7 +9739,6 @@ const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const HttpClient = __nccwpck_require__(4349);
 const { isEmpty } = __nccwpck_require__(1002);
-const { getCommitMessage } = __nccwpck_require__(6254);
 const {
   Input, Output, BuildStatus, ActionType,
 } = __nccwpck_require__(3456);
@@ -9756,6 +9755,29 @@ const setFailed = (error) => {
 };
 
 const truncate = (text, limit = 2000) => (text.length > limit ? text.substring(0, limit) : text);
+
+const getCommitMessage = async (sha) => {
+  try {
+    const token = core.getInput(Input.GITHUB_TOKEN);
+
+    if (isEmpty(token)) {
+      return null;
+    }
+
+    const octokit = github.getOctokit(token);
+
+    const { data } = await octokit.rest.git.getCommit({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      commit_sha: sha,
+    });
+
+    return data.message;
+  } catch (error) {
+    core.warning(`Could not fetch commit message: ${error.message}`);
+    return null;
+  }
+};
 
 const createBuild = async () => {
   core.info('Validating inputs...');
@@ -9961,42 +9983,6 @@ class HttpClient {
 }
 
 module.exports = HttpClient;
-
-
-/***/ }),
-
-/***/ 6254:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const core = __nccwpck_require__(2186);
-const github = __nccwpck_require__(5438);
-const { isEmpty } = __nccwpck_require__(1002);
-const { Input } = __nccwpck_require__(3456);
-
-const getCommitMessage = async (sha) => {
-  try {
-    const token = core.getInput(Input.GITHUB_TOKEN);
-
-    if (isEmpty(token)) {
-      return null;
-    }
-
-    const octokit = github.getOctokit(token);
-
-    const { data } = await octokit.rest.git.getCommit({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      commit_sha: sha,
-    });
-
-    return data.message;
-  } catch (error) {
-    core.warning(`Could not fetch commit message: ${error.message}`);
-    return null;
-  }
-};
-
-module.exports = { getCommitMessage };
 
 
 /***/ }),
