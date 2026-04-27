@@ -177,6 +177,33 @@ jobs:
 
 In this example, the GitHub Action updates an existing nullplatform build's status to 'successful' when a pull request is closed.
 
+## Releasing
+
+Releases are split into two scripts because the org-level branch protection requires changes to `main` to go through a pull request.
+
+1. **Bump and open a release PR**:
+
+   ```bash
+   ./update-version.sh <new-version>     # e.g. ./update-version.sh 1.3.0
+   ```
+
+   Bumps `package.json` and `package-lock.json`, regenerates `dist/`, creates a `release/v<x.y.z>` branch, and opens a PR titled `Version v<x.y.z>`.
+
+2. **After the PR is merged**, sync `main` and publish tags:
+
+   ```bash
+   git checkout main && git pull
+   ./tag-release.sh <new-version>        # e.g. ./tag-release.sh 1.3.0
+   ```
+
+   Creates the fixed `v<x.y.z>` tag and force-moves the major moving tag (`v1`, `v2`, ...). Tags are not under the branch ruleset, so they can be pushed directly.
+
+3. **Optional** — publish a GitHub Release for the changelog:
+
+   ```bash
+   gh release create v<x.y.z> --title "v<x.y.z>" --notes "..."
+   ```
+
 ## License
 
 This GitHub Action is licensed under the [MIT License](LICENSE).
