@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
 VERSION_NUMBER=$(grep '"version"' package.json | cut -d '"' -f 4)
 MAJOR_VERSION_NUMBER=$(echo "$VERSION_NUMBER" | cut -d '.' -f 1)
 VERSION=$(echo "v$VERSION_NUMBER")
